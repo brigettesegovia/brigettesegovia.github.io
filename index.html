@@ -121,15 +121,16 @@
 
     .theme-pill {
       justify-self: end;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.25rem;
+      position: relative;
+      width: 78px;
+      height: 42px;
+      padding: 0;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.06);
       cursor: pointer;
       font-family: inherit;
+      overflow: hidden;
       transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
     }
 
@@ -138,6 +139,9 @@
     }
 
     .theme-dot {
+      position: absolute;
+      top: 4px;
+      left: 4px;
       width: 32px;
       height: 32px;
       display: grid;
@@ -147,14 +151,18 @@
       color: white;
       box-shadow: 0 0 18px rgba(56, 189, 248, 0.9);
       font-size: 0.9rem;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+      z-index: 2;
+      transition: transform 0.32s ease, background 0.3s ease, box-shadow 0.3s ease;
     }
 
     .theme-gear {
+      position: absolute;
+      top: 50%;
+      right: 11px;
+      transform: translateY(-50%);
       color: rgba(255,255,255,0.45);
       font-size: 0.9rem;
-      padding-right: 0.45rem;
-      transition: color 0.3s ease;
+      transition: color 0.3s ease, left 0.32s ease, right 0.32s ease;
     }
 
     /* HERO */
@@ -256,7 +264,7 @@
       letter-spacing: 0.42em;
       text-transform: uppercase;
       margin-bottom: 2.4rem;
-      text-shadow: 0 0 18px rgba(56, 189, 248, 0.5);
+      text-shadow: 0 0 18px rgba(209, 213, 219, 0.35);
     }
 
     h1 {
@@ -513,10 +521,13 @@
     body.light-mode .theme-dot {
       background: #f59e0b;
       box-shadow: 0 0 18px rgba(245, 158, 11, 0.7);
+      transform: translateX(38px);
     }
 
     body.light-mode .theme-gear {
       color: rgba(15, 23, 42, 0.45);
+      right: auto;
+      left: 11px;
     }
 
     @media (max-width: 950px) {
@@ -565,8 +576,18 @@
         max-width: 280px;
       }
 
-      .theme-gear {
-        display: none;
+      .theme-pill {
+        width: 72px;
+        height: 40px;
+      }
+
+      .theme-dot {
+        width: 31px;
+        height: 31px;
+      }
+
+      body.light-mode .theme-dot {
+        transform: translateX(33px);
       }
     }
   </style>
@@ -690,237 +711,237 @@
   </footer>
 
   <script>
-  /* Background stars with cursor warp */
+    /* Background stars with cursor warp */
 
-  const sparklesCanvas = document.getElementById("sparkles-canvas");
-  const sparklesCtx = sparklesCanvas.getContext("2d");
+    const sparklesCanvas = document.getElementById("sparkles-canvas");
+    const sparklesCtx = sparklesCanvas.getContext("2d");
 
-  const orbitCanvas = document.getElementById("orbit-canvas");
-  const orbitCtx = orbitCanvas.getContext("2d");
+    const orbitCanvas = document.getElementById("orbit-canvas");
+    const orbitCtx = orbitCanvas.getContext("2d");
 
-  let width;
-  let height;
-  let stars = [];
-  let orbitParticles = [];
+    let width;
+    let height;
+    let stars = [];
+    let orbitParticles = [];
 
-  const mouse = {
-    x: -9999,
-    y: -9999,
-    active: false,
-    radius: 190,
-    strength: 55
-  };
+    const mouse = {
+      x: -9999,
+      y: -9999,
+      active: false,
+      radius: 190,
+      strength: 55
+    };
 
-  window.addEventListener("pointermove", (event) => {
-    mouse.x = event.clientX;
-    mouse.y = event.clientY;
-    mouse.active = true;
-  });
-
-  window.addEventListener("pointerleave", () => {
-    mouse.active = false;
-    mouse.x = -9999;
-    mouse.y = -9999;
-  });
-
-  function resizeCanvases() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-
-    sparklesCanvas.width = width;
-    sparklesCanvas.height = height;
-
-    orbitCanvas.width = width;
-    orbitCanvas.height = height;
-
-    createStars();
-    createOrbitParticles();
-  }
-
-  function createStars() {
-    const starCount = Math.floor((width * height) / 1800);
-
-    stars = Array.from({ length: starCount }, () => {
-      const bandBias = Math.random();
-
-      const y =
-        bandBias < 0.55
-          ? height * 0.54 + (Math.random() - 0.5) * 240
-          : Math.random() * height;
-
-      return {
-        x: Math.random() * width,
-        y,
-        r: Math.random() * 1.45 + 0.15,
-        a: Math.random() * 0.78 + 0.12,
-        tw: Math.random() * Math.PI * 2,
-        s: Math.random() * 0.018 + 0.006,
-        driftX: (Math.random() - 0.5) * 0.035,
-        driftY: (Math.random() - 0.5) * 0.035
-      };
+    window.addEventListener("pointermove", (event) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+      mouse.active = true;
     });
-  }
 
-  function createOrbitParticles() {
-    orbitParticles = [];
+    window.addEventListener("pointerleave", () => {
+      mouse.active = false;
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
 
-    const colors = [
-  "rgba(255, 130, 165, 0.90)",
-  "rgba(255, 145, 175, 0.80)",
-  "rgba(255, 160, 190, 0.70)",
-  "rgba(255, 175, 205, 0.60)",
-  "rgba(255, 190, 215, 0.50)"
-];
+    function resizeCanvases() {
+      width = window.innerWidth;
+      height = window.innerHeight;
 
-    const orbitCount = 15;
+      sparklesCanvas.width = width;
+      sparklesCanvas.height = height;
 
-    for (let j = 0; j < orbitCount; j++) {
-      const cx = width * (0.3 + Math.random() * 0.62);
-      const cy = height * (0.34 + Math.random() * 0.42);
-      const rx = width * (0.08 + Math.random() * 0.18);
-      const ry = height * (0.025 + Math.random() * 0.08);
-      const rotation = Math.random() * Math.PI;
-      const start = Math.random() * Math.PI * 2;
-      const arcLength = Math.PI * (0.25 + Math.random() * 0.38);
-      const count = 28 + Math.floor(Math.random() * 38);
-      const color = colors[j % colors.length];
+      orbitCanvas.width = width;
+      orbitCanvas.height = height;
 
-      for (let i = 0; i < count; i++) {
-        const t = start + (i / count) * arcLength;
-        orbitParticles.push({
-          cx,
-          cy,
-          rx,
-          ry,
-          rotation,
-          t,
-          offset: Math.random() * 0.04,
-          size: Math.random() * 2.2 + 1.2,
-          color,
-          speed: (Math.random() * 0.0018 + 0.00055) * (Math.random() > 0.5 ? 1 : -1)
-        });
-      }
+      createStars();
+      createOrbitParticles();
     }
-  }
 
-  function drawStars() {
-    sparklesCtx.clearRect(0, 0, width, height);
+    function createStars() {
+      const starCount = Math.floor((width * height) / 1800);
 
-    const isLightMode = document.body.classList.contains("light-mode");
+      stars = Array.from({ length: starCount }, () => {
+        const bandBias = Math.random();
 
-    for (const star of stars) {
-      star.tw += star.s;
+        const y =
+          bandBias < 0.55
+            ? height * 0.54 + (Math.random() - 0.5) * 240
+            : Math.random() * height;
 
-      star.x += star.driftX;
-      star.y += star.driftY;
+        return {
+          x: Math.random() * width,
+          y,
+          r: Math.random() * 1.45 + 0.15,
+          a: Math.random() * 0.78 + 0.12,
+          tw: Math.random() * Math.PI * 2,
+          s: Math.random() * 0.018 + 0.006,
+          driftX: (Math.random() - 0.5) * 0.035,
+          driftY: (Math.random() - 0.5) * 0.035
+        };
+      });
+    }
 
-      if (star.x < 0) star.x = width;
-      if (star.x > width) star.x = 0;
-      if (star.y < 0) star.y = height;
-      if (star.y > height) star.y = 0;
+    function createOrbitParticles() {
+      orbitParticles = [];
 
-      let drawX = star.x;
-      let drawY = star.y;
+      const colors = [
+        "rgba(255, 130, 165, 0.90)",
+        "rgba(255, 145, 175, 0.80)",
+        "rgba(255, 160, 190, 0.70)",
+        "rgba(255, 175, 205, 0.60)",
+        "rgba(255, 190, 215, 0.50)"
+      ];
 
-      if (mouse.active) {
-        const dx = star.x - mouse.x;
-        const dy = star.y - mouse.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+      const orbitCount = 15;
 
-        if (distance < mouse.radius && distance > 0.001) {
-          const force = Math.pow(1 - distance / mouse.radius, 2);
-          const angle = Math.atan2(dy, dx);
+      for (let j = 0; j < orbitCount; j++) {
+        const cx = width * (0.3 + Math.random() * 0.62);
+        const cy = height * (0.34 + Math.random() * 0.42);
+        const rx = width * (0.08 + Math.random() * 0.18);
+        const ry = height * (0.025 + Math.random() * 0.08);
+        const rotation = Math.random() * Math.PI;
+        const start = Math.random() * Math.PI * 2;
+        const arcLength = Math.PI * (0.25 + Math.random() * 0.38);
+        const count = 28 + Math.floor(Math.random() * 38);
+        const color = colors[j % colors.length];
 
-          drawX += Math.cos(angle) * force * mouse.strength;
-          drawY += Math.sin(angle) * force * mouse.strength;
+        for (let i = 0; i < count; i++) {
+          const t = start + (i / count) * arcLength;
+          orbitParticles.push({
+            cx,
+            cy,
+            rx,
+            ry,
+            rotation,
+            t,
+            offset: Math.random() * 0.04,
+            size: Math.random() * 2.2 + 1.2,
+            color,
+            speed: (Math.random() * 0.0018 + 0.00055) * (Math.random() > 0.5 ? 1 : -1)
+          });
         }
       }
+    }
 
-      const alpha = star.a * (0.62 + 0.38 * Math.sin(star.tw));
+    function drawStars() {
+      sparklesCtx.clearRect(0, 0, width, height);
 
-      sparklesCtx.beginPath();
-      sparklesCtx.arc(drawX, drawY, star.r, 0, Math.PI * 2);
+      const isLightMode = document.body.classList.contains("light-mode");
 
-      if (isLightMode) {
-        sparklesCtx.fillStyle = `rgba(15,23,42,${alpha * 0.45})`;
+      for (const star of stars) {
+        star.tw += star.s;
+
+        star.x += star.driftX;
+        star.y += star.driftY;
+
+        if (star.x < 0) star.x = width;
+        if (star.x > width) star.x = 0;
+        if (star.y < 0) star.y = height;
+        if (star.y > height) star.y = 0;
+
+        let drawX = star.x;
+        let drawY = star.y;
+
+        if (mouse.active) {
+          const dx = star.x - mouse.x;
+          const dy = star.y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < mouse.radius && distance > 0.001) {
+            const force = Math.pow(1 - distance / mouse.radius, 2);
+            const angle = Math.atan2(dy, dx);
+
+            drawX += Math.cos(angle) * force * mouse.strength;
+            drawY += Math.sin(angle) * force * mouse.strength;
+          }
+        }
+
+        const alpha = star.a * (0.62 + 0.38 * Math.sin(star.tw));
+
+        sparklesCtx.beginPath();
+        sparklesCtx.arc(drawX, drawY, star.r, 0, Math.PI * 2);
+
+        if (isLightMode) {
+          sparklesCtx.fillStyle = `rgba(15,23,42,${alpha * 0.45})`;
+        } else {
+          sparklesCtx.fillStyle = `rgba(255,255,255,${alpha})`;
+        }
+
+        sparklesCtx.fill();
+      }
+    }
+
+    function drawOrbitParticles() {
+      orbitCtx.clearRect(0, 0, width, height);
+
+      for (const p of orbitParticles) {
+        p.t += p.speed;
+
+        const x0 = Math.cos(p.t + p.offset) * p.rx;
+        const y0 = Math.sin(p.t + p.offset) * p.ry;
+
+        let x = p.cx + x0 * Math.cos(p.rotation) - y0 * Math.sin(p.rotation);
+        let y = p.cy + x0 * Math.sin(p.rotation) + y0 * Math.cos(p.rotation);
+
+        if (mouse.active) {
+          const dx = x - mouse.x;
+          const dy = y - mouse.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < mouse.radius && distance > 0.001) {
+            const force = Math.pow(1 - distance / mouse.radius, 2);
+            const angle = Math.atan2(dy, dx);
+
+            x += Math.cos(angle) * force * mouse.strength * 0.8;
+            y += Math.sin(angle) * force * mouse.strength * 0.8;
+          }
+        }
+
+        orbitCtx.beginPath();
+        orbitCtx.arc(x, y, p.size, 0, Math.PI * 2);
+        orbitCtx.fillStyle = p.color;
+        orbitCtx.fill();
+      }
+    }
+
+    function animate() {
+      drawStars();
+      drawOrbitParticles();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resizeCanvases);
+
+    resizeCanvases();
+    animate();
+
+    /* Light/dark mode toggle */
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+
+    function setTheme(mode) {
+      if (mode === "light") {
+        document.body.classList.add("light-mode");
+        themeIcon.textContent = "☀";
+        themeToggle.setAttribute("aria-label", "Switch to dark mode");
       } else {
-        sparklesCtx.fillStyle = `rgba(255,255,255,${alpha})`;
+        document.body.classList.remove("light-mode");
+        themeIcon.textContent = "☾";
+        themeToggle.setAttribute("aria-label", "Switch to light mode");
       }
 
-      sparklesCtx.fill();
-    }
-  }
-
-  function drawOrbitParticles() {
-    orbitCtx.clearRect(0, 0, width, height);
-
-    for (const p of orbitParticles) {
-      p.t += p.speed;
-
-      const x0 = Math.cos(p.t + p.offset) * p.rx;
-      const y0 = Math.sin(p.t + p.offset) * p.ry;
-
-      let x = p.cx + x0 * Math.cos(p.rotation) - y0 * Math.sin(p.rotation);
-      let y = p.cy + x0 * Math.sin(p.rotation) + y0 * Math.cos(p.rotation);
-
-      if (mouse.active) {
-        const dx = x - mouse.x;
-        const dy = y - mouse.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < mouse.radius && distance > 0.001) {
-          const force = Math.pow(1 - distance / mouse.radius, 2);
-          const angle = Math.atan2(dy, dx);
-
-          x += Math.cos(angle) * force * mouse.strength * 0.8;
-          y += Math.sin(angle) * force * mouse.strength * 0.8;
-        }
-      }
-
-      orbitCtx.beginPath();
-      orbitCtx.arc(x, y, p.size, 0, Math.PI * 2);
-      orbitCtx.fillStyle = p.color;
-      orbitCtx.fill();
-    }
-  }
-
-  function animate() {
-    drawStars();
-    drawOrbitParticles();
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener("resize", resizeCanvases);
-
-  resizeCanvases();
-  animate();
-
-  /* Light/dark mode toggle */
-
-  const themeToggle = document.getElementById("theme-toggle");
-  const themeIcon = document.getElementById("theme-icon");
-
-  function setTheme(mode) {
-    if (mode === "light") {
-      document.body.classList.add("light-mode");
-      themeIcon.textContent = "☀";
-      themeToggle.setAttribute("aria-label", "Switch to dark mode");
-    } else {
-      document.body.classList.remove("light-mode");
-      themeIcon.textContent = "☾";
-      themeToggle.setAttribute("aria-label", "Switch to light mode");
+      localStorage.setItem("theme", mode);
     }
 
-    localStorage.setItem("theme", mode);
-  }
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(savedTheme);
 
-  const savedTheme = localStorage.getItem("theme") || "dark";
-  setTheme(savedTheme);
-
-  themeToggle.addEventListener("click", () => {
-    const isLight = document.body.classList.contains("light-mode");
-    setTheme(isLight ? "dark" : "light");
-  });
-</script>
+    themeToggle.addEventListener("click", () => {
+      const isLight = document.body.classList.contains("light-mode");
+      setTheme(isLight ? "dark" : "light");
+    });
+  </script>
 </body>
 </html>
