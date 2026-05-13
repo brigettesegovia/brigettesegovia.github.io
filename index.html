@@ -432,6 +432,48 @@
       line-height: 1.65;
     }
 
+
+    /* ABOUT SECTION WITH PHOTO */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) 320px;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+
+    .about-text p {
+      max-width: 760px;
+    }
+
+    .about-photo-wrap {
+      width: 320px;
+      height: 400px;
+      justify-self: end;
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 154, 184, 0.28);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow:
+        0 0 38px rgba(255, 154, 184, 0.14),
+        0 22px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .about-photo {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 35%;
+      filter: saturate(0.96) contrast(1.03);
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .about-photo-wrap:hover .about-photo {
+      transform: scale(1.035);
+      filter: saturate(1.05) contrast(1.05);
+    }
+
     /* CONTACT ICONS */
 
     .contact-section {
@@ -627,6 +669,15 @@
       color: rgba(15, 23, 42, 0.75);
     }
 
+
+    body.light-mode .about-photo-wrap {
+      border-color: rgba(255, 127, 168, 0.32);
+      background: rgba(255,255,255,0.65);
+      box-shadow:
+        0 18px 50px rgba(15, 23, 42, 0.12),
+        0 0 34px rgba(255, 127, 168, 0.13);
+    }
+
     @media (max-width: 950px) {
       .navbar {
         grid-template-columns: 1fr auto;
@@ -649,6 +700,23 @@
       .button-row,
       .contact-icons {
         justify-content: center;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .about-photo-wrap {
+        width: min(320px, 82vw);
+        height: 400px;
+        justify-self: center;
+        order: -1;
+      }
+
+      .about-text p {
+        margin-left: auto;
+        margin-right: auto;
       }
     }
 
@@ -753,7 +821,9 @@
       </div>
     </section>
 
-    <section class="section" id="about">
+    <section class="section about-section" id="about">
+  <div class="about-grid">
+    <div class="about-text">
       <h2>About</h2>
       <p>
         I am an astrophysics PhD student working with Monica Valluri on the dynamics
@@ -763,40 +833,44 @@
         researcher Ana Bonaca on detecting dark matter subhalos using stellar streams,
         and with Professor Adam Burgasser on Late-M and L dwarf companions.
       </p>
-    </section>
+    </div>
+
+    <div class="about-photo-wrap">
+      <img src="about-photo.jpg" alt="Portrait of Brigette Segovia" class="about-photo" />
+    </div>
+  </div>
+</section>
     
 
     <section class="section" id="research">
       <h2>Research</h2>
       <p>
-        My work focuses on understanding how galaxies evolve within dark matter halos,
-        how satellite galaxies lose mass through tidal stripping, and how simulations
-        can connect theoretical models to observable structure.
+        <p>
+      My research focuses on the dynamics of stellar streams formed from globular
+      clusters that were originally embedded in dwarf galaxies later accreted by the
+      Milky Way. I use numerical simulations and particle-spray methods to study how
+      the evolving tidal field of a parent dwarf galaxy can shape stream morphology,
+      produce gaps and spurs, and influence the kinematics of streams such as GD-1.
+      I am interested in using stellar streams as probes of dark matter
+      structure, galaxy accretion history, and the dynamical evolution of the Milky Way.
       </p>
 
-      <div class="cards">
-        <div class="card">
-          <h3>Dark Matter Halos</h3>
-          <p>
-            Density profiles, substructure, halo mass functions, and dynamical evolution.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Satellite Disruption</h3>
-          <p>
-            Simulations of tidal stripping, bound mass evolution, and orbital decay.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Stellar Streams</h3>
-          <p>
-            Stream formation, perturbations, particle-spray methods, and visualization.
-          </p>
-        </div>
+      <div class="cards single-research-card">
+    <div class="card stream-card">
+      <div class="stream-card-text">
+        <h3>Stellar Streams</h3>
+        <p>
+          I study how dwarf galaxies and dark matter halos shape the structure,
+          morphology, and kinematics of globular-cluster stellar streams.
+        </p>
       </div>
-    </section>
+
+      <div class="stream-image-wrap">
+        <img src="stream-example.png" alt="Example of a stellar stream simulation" class="stream-image" />
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="section" id="projects">
       <h2>Projects</h2>
