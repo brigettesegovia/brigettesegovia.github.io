@@ -432,83 +432,31 @@
       line-height: 1.65;
     }
 
-    /* SINGLE RESEARCH CARD WITH STREAM FIGURES */
-
     .single-research-card {
-      grid-template-columns: 1fr;
-      max-width: 1200px;
+      grid-template-columns: minmax(0, 980px);
     }
 
     .stream-card {
       display: grid;
-      grid-template-columns: minmax(230px, 0.42fr) minmax(0, 0.58fr);
-      gap: clamp(2rem, 5vw, 4rem);
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
       align-items: center;
-      min-height: 500px;
-      padding: clamp(2rem, 4vw, 3rem);
-      overflow: hidden;
+      gap: clamp(1rem, 3vw, 2rem);
     }
 
-    .stream-card-text {
-      align-self: center;
-    }
-
-    .stream-card-text h3 {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      margin-bottom: 1rem;
-    }
-
-    .stream-card-text p {
-      max-width: 420px;
-      color: rgba(255,255,255,0.58);
-      font-size: 1.05rem;
-      line-height: 1.75;
-    }
-
-    .stream-figure-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .stream-image-wrap {
       width: 100%;
-    }
-
-    .stream-figure {
-      width: 100%;
+      max-width: 680px;
+      justify-self: end;
       overflow: hidden;
-      border-radius: 1.2rem;
-      border: 1px solid rgba(255, 154, 184, 0.22);
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 154, 184, 0.08), transparent 35%),
-        rgba(255, 255, 255, 0.035);
-      box-shadow:
-        inset 0 0 30px rgba(255, 154, 184, 0.05),
-        0 14px 34px rgba(0, 0, 0, 0.22);
-    }
-
-    .stream-figure-main {
-      height: 340px;
-      padding: 0.8rem;
-    }
-
-    .stream-figure-wide {
-      height: 140px;
-      padding: 0.55rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 154, 184, 0.2);
+      background: rgba(255,255,255,0.035);
     }
 
     .stream-image {
-      width: 100%;
-      height: 100%;
       display: block;
-      object-fit: contain;
-      object-position: center;
-      border-radius: 0.75rem;
-      opacity: 0.96;
-      transition: transform 0.35s ease, opacity 0.35s ease;
-    }
-
-    .stream-card:hover .stream-image {
-      transform: scale(1.012);
-      opacity: 1;
+      width: 100%;
+      height: auto;
     }
 
 
@@ -663,11 +611,6 @@
       color: rgba(15, 23, 42, 0.72);
     }
 
-    body.light-mode .keywords {
-      color: #475569;
-      text-shadow: none;
-    }
-
     body.light-mode .address-block {
       color: rgba(15, 23, 42, 0.78);
     }
@@ -720,16 +663,6 @@
       color: rgba(15, 23, 42, 0.45);
       right: auto;
       left: 11px;
-    }
-
-    body.light-mode .stream-figure {
-      border-color: rgba(255, 127, 168, 0.24);
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 127, 168, 0.10), transparent 35%),
-        rgba(255, 255, 255, 0.72);
-      box-shadow:
-        inset 0 0 30px rgba(255, 127, 168, 0.05),
-        0 12px 28px rgba(15, 23, 42, 0.10);
     }
 
     body.light-mode .contact-bubble {
@@ -822,18 +755,9 @@
         text-align: center;
       }
 
-      .stream-card-text p {
-        max-width: none;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .stream-figure-main {
-        height: 320px;
-      }
-
-      .stream-figure-wide {
-        height: 130px;
+      .stream-image-wrap {
+        justify-self: center;
+        max-width: min(680px, 100%);
       }
     }
 
@@ -896,6 +820,7 @@
     <nav class="nav-links">
       <a href="#about">About</a>
       <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
       <a href="#cv">CV</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -971,29 +896,33 @@
       </p>
 
       <div class="cards single-research-card">
-        <div class="card stream-card">
-          <div class="stream-card-text">
-            <h3>Stellar Streams</h3>
-            <p>
-              I study how dwarf galaxies and dark matter halos shape the structure,
-              morphology, and kinematics of globular-cluster stellar streams.
-            </p>
-          </div>
-
-          <div class="stream-figure-stack">
-            <div class="stream-figure stream-figure-main">
-              <img src="stream-example2.png" alt="Orbit and stream interaction example" class="stream-image" />
-            </div>
-
-            <div class="stream-figure stream-figure-wide">
-              <img src="stream-example.png" alt="Example of a stellar stream simulation" class="stream-image" />
-            </div>
-          </div>
-        </div>
+    <div class="card stream-card">
+      <div class="stream-card-text">
+        <h3>Stellar Streams</h3>
+        <p>
+        </p>
       </div>
+
+      <div class="stream-images">
+  <div class="stream-image-wrap stream-image-small">
+    <img src="stream-image2.png" alt="Second stellar stream example" class="stream-image" />
+  </div>
+
+  <div class="stream-image-wrap stream-image-large">
+    <img src="stream-example.png" alt="Example of a stellar stream simulation" class="stream-image" />
+  </div>
+</div>
+    </div>
+  </div>
 </section>
 
-  
+    <section class="section" id="projects">
+      <h2>Projects</h2>
+      <p>
+        Add links here to your GitHub projects, simulations, figures, animations,
+        papers, posters, or notebooks.
+      </p>
+    </section>
 
     <section class="section" id="cv">
       <h2>CV</h2>
@@ -1119,7 +1048,7 @@
         "rgba(255, 190, 215, 0.50)"
       ];
 
-      const orbitCount = 20;
+      const orbitCount = 15;
 
       for (let j = 0; j < orbitCount; j++) {
         const cx = width * (0.3 + Math.random() * 0.62);
