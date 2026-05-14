@@ -474,9 +474,7 @@
 
     .stream-figure {
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
+      overflow: hidden;
       border-radius: 1.2rem;
       border: 1px solid rgba(255, 154, 184, 0.22);
       background:
@@ -488,32 +486,24 @@
     }
 
     .stream-figure-main {
-      min-height: 340px;
+      height: 340px;
       padding: 0.8rem;
     }
 
     .stream-figure-wide {
-      min-height: 140px;
+      height: 140px;
       padding: 0.55rem;
     }
 
     .stream-image {
       width: 100%;
-      flex: 1;
-      min-height: 0;
+      height: 100%;
       display: block;
       object-fit: contain;
       object-position: center;
       border-radius: 0.75rem;
       opacity: 0.96;
       transition: transform 0.35s ease, opacity 0.35s ease;
-    }
-
-    .stream-caption {
-      margin: 0;
-      color: rgba(255,255,255,0.75);
-      font-size: 0.78rem;
-      line-height: 1.35;
     }
 
     .stream-card:hover .stream-image {
@@ -742,10 +732,6 @@
         0 12px 28px rgba(15, 23, 42, 0.10);
     }
 
-    body.light-mode .stream-caption {
-      color: rgba(15, 23, 42, 0.72);
-    }
-
     body.light-mode .contact-bubble {
       color: rgba(15, 23, 42, 0.75);
     }
@@ -843,11 +829,11 @@
       }
 
       .stream-figure-main {
-        min-height: 320px;
+        height: 320px;
       }
 
       .stream-figure-wide {
-        min-height: 130px;
+        height: 130px;
       }
     }
 
@@ -997,12 +983,10 @@
           <div class="stream-figure-stack">
             <div class="stream-figure stream-figure-main">
               <img src="stream-example2.png" alt="Orbit and stream interaction example" class="stream-image" />
-              <p class="stream-caption">Figure 1. Stellar stream at z = 0 after ~3 Gyr in galactocentric coordinates, showing repeated GC-DG encounters and a clear spur.</p>
             </div>
 
             <div class="stream-figure stream-figure-wide">
               <img src="stream-example.png" alt="Example of a stellar stream simulation" class="stream-image" />
-              <p class="stream-caption">Examples of simulated stellar streams at the end of 3 Gyr in ψ<sub>1</sub> vs ψ<sub>2</sub> coordinates.</p>
             </div>
           </div>
         </div>
@@ -1160,7 +1144,7 @@
             offset: Math.random() * 0.04,
             size: Math.random() * 2.2 + 1.2,
             color,
-            speed: (Math.random() * 0.0032 + 0.0011) * (Math.random() > 0.5 ? 1 : -1)
+            speed: (Math.random() * 0.0018 + 0.00055) * (Math.random() > 0.5 ? 1 : -1)
           });
         }
       }

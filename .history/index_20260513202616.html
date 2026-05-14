@@ -477,6 +477,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
+      overflow: hidden;
       border-radius: 1.2rem;
       border: 1px solid rgba(255, 154, 184, 0.22);
       background:
@@ -488,19 +489,18 @@
     }
 
     .stream-figure-main {
-      min-height: 340px;
+      height: 340px;
       padding: 0.8rem;
     }
 
     .stream-figure-wide {
-      min-height: 140px;
+      height: 140px;
       padding: 0.55rem;
     }
 
     .stream-image {
       width: 100%;
-      flex: 1;
-      min-height: 0;
+      height: calc(100% - 1.9rem);
       display: block;
       object-fit: contain;
       object-position: center;
@@ -843,11 +843,11 @@
       }
 
       .stream-figure-main {
-        min-height: 320px;
+        height: 320px;
       }
 
       .stream-figure-wide {
-        min-height: 130px;
+        height: 130px;
       }
     }
 
@@ -1002,7 +1002,7 @@
 
             <div class="stream-figure stream-figure-wide">
               <img src="stream-example.png" alt="Example of a stellar stream simulation" class="stream-image" />
-              <p class="stream-caption">Examples of simulated stellar streams at the end of 3 Gyr in ψ<sub>1</sub> vs ψ<sub>2</sub> coordinates.</p>
+              <p class="stream-caption">Examples of simulated stellar streams at the end of 3 Gyr in psi1 vs psi2 coordinates.</p>
             </div>
           </div>
         </div>
@@ -1160,7 +1160,7 @@
             offset: Math.random() * 0.04,
             size: Math.random() * 2.2 + 1.2,
             color,
-            speed: (Math.random() * 0.0032 + 0.0011) * (Math.random() > 0.5 ? 1 : -1)
+            speed: (Math.random() * 0.0018 + 0.00055) * (Math.random() > 0.5 ? 1 : -1)
           });
         }
       }
